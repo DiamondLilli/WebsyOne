@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;600;700&display=swap');
+
 /* ============================================
    BASE RESET
    ============================================ */
@@ -20,10 +22,6 @@ body {
 }
 
 /* ============================================
-   TYPOGRAPHY — loaded via @import fallback
-   ============================================ */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;600;700&display=swap');
-
 /* ============================================
    FIX 1: HERO SECTION — was missing height & background
    ============================================ */
@@ -636,4 +634,79 @@ body {
     .dot { display: none; } /* dots get crowded at very small widths */
 
     .footer { padding: 40px 20px; }
+}
+/* ============================================
+   SITE NAV
+   ============================================ */
+.site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 200;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.site-nav-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 1px;
+}
+
+.site-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+}
+
+.site-nav-links a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+.site-nav-links a:hover { color: #2ed3c6; }
+
+.site-nav-cta {
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 8px 18px;
+    border-radius: 30px;
+    color: white !important;
+    transition: border-color 0.3s, color 0.3s !important;
+}
+
+.site-nav-cta:hover {
+    border-color: #2ed3c6 !important;
+    color: #2ed3c6 !important;
+}
+
+/* Push hero down so nav doesn't cover it */
+.hero-section { padding-top: 80px; }
+
+/* ============================================
+   NAV MOBILE
+   ============================================ */
+@media (max-width: 600px) {
+    .site-nav {
+        padding: 14px 20px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .site-nav-links { gap: 16px; }
+    .site-nav-links a { font-size: 10px; }
+    .site-nav-name { font-size: 15px; }
+    .hero-section { padding-top: 100px; }
 }
