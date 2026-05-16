@@ -33,9 +33,8 @@ body {
     min-height: 100vh;
     background: linear-gradient(160deg, #0d0d0d 0%, #0a1a1a 60%, #091414 100%);
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
-    padding-bottom: 60px;
     overflow: hidden;
 }
 
@@ -63,10 +62,58 @@ body {
 }
 
 /* ============================================
-   SCROLL INDICATOR
+   HERO CONTENT
+   ============================================ */
+.hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+    padding: 0 24px;
+    animation: fadeIn 1.2s ease both;
+}
+
+.hero-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #2ed3c6;
+}
+
+.hero-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 9vw, 110px);
+    font-weight: 600;
+    line-height: 1.05;
+    color: white;
+}
+
+.hero-heading em {
+    font-style: italic;
+    color: #2ed3c6;
+}
+
+.hero-sub {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: rgba(255,255,255,0.45);
+    max-width: 440px;
+}
+
+/* ============================================
+   SCROLL INDICATOR — absolute, pinned to bottom of hero
    ============================================ */
 .scroll-indicator {
-    position: relative; /* was absolute — now sits inside flex hero */
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
