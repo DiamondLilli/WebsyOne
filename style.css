@@ -1,41 +1,83 @@
+/* ============================================
+   BASE RESET
+   ============================================ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #0a0a0a;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
 
 /* ============================================
-   NEW STYLES — added below, nothing above changed
+   TYPOGRAPHY — loaded via @import fallback
    ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;600;700&display=swap');
 
-/* Google Fonts applied to new sections only */
-.about-section,
-.work-section,
-.stats-strip,
-.tagline-strip,
-.testimonial-section,
-.cta-section,
-.footer,
-.section-heading,
-.cta-heading {
-    font-family: 'Montserrat', sans-serif;
+/* ============================================
+   FIX 1: HERO SECTION — was missing height & background
+   ============================================ */
+.hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(160deg, #0d0d0d 0%, #0a1a1a 60%, #091414 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 60px;
+    overflow: hidden;
 }
 
-.section-heading,
-.cta-heading {
-    font-family: 'Cormorant Garamond', serif;
-}
-
-/* Scroll indicator */
-.scroll-indicator {
+/* Subtle grain texture overlay */
+.hero-section::before {
+    content: '';
     position: absolute;
-    bottom: 40px;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* Teal glow orb behind scroll indicator */
+.hero-section::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
     left: 50%;
     transform: translateX(-50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(46,211,198,0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* ============================================
+   SCROLL INDICATOR
+   ============================================ */
+.scroll-indicator {
+    position: relative; /* was absolute — now sits inside flex hero */
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
     color: rgba(255,255,255,0.6);
     font-size: 10px;
+    font-family: 'Montserrat', sans-serif;
     letter-spacing: 3px;
     text-transform: uppercase;
     animation: fadeIn 2s ease 1s both;
+    z-index: 1;
 }
 
 .scroll-line {
@@ -47,19 +89,22 @@
 
 @keyframes scrollPulse {
     0%, 100% { opacity: 0.4; transform: scaleY(1); }
-    50% { opacity: 1; transform: scaleY(1.2); }
+    50%       { opacity: 1;   transform: scaleY(1.2); }
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
-    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Tagline strip */
+/* ============================================
+   TAGLINE STRIP
+   ============================================ */
 .tagline-strip {
     background: #0a0a0a;
     padding: 22px 0;
     border-bottom: 1px solid #1e1e1e;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .tagline-inner {
@@ -71,6 +116,7 @@
     font-size: 11px;
     letter-spacing: 4px;
     text-transform: uppercase;
+    flex-wrap: wrap; /* FIX: wraps on narrow screens */
 }
 
 .tagline-inner span:not(.dot) {
@@ -88,10 +134,43 @@
     line-height: 1;
 }
 
-/* ---- ABOUT SECTION ---- */
+/* ============================================
+   SECTION LABELS & SHARED HEADINGS
+   ============================================ */
+.section-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #2ed3c6;
+    margin-bottom: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.section-label.center { text-align: center; }
+
+.section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 46px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: white;
+    margin-bottom: 28px;
+}
+
+.section-heading.center { text-align: center; }
+
+.section-heading em {
+    font-style: italic;
+    color: #2ed3c6;
+}
+
+/* ============================================
+   ABOUT SECTION
+   ============================================ */
 .about-section {
     background: #0d0d0d;
     padding: 120px 80px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .about-container {
@@ -130,39 +209,7 @@
     z-index: 0;
 }
 
-.about-text {
-    color: white;
-}
-
-.section-label {
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: #2ed3c6;
-    margin-bottom: 16px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.section-label.center {
-    text-align: center;
-}
-
-.section-heading {
-    font-size: 46px;
-    font-weight: 600;
-    line-height: 1.2;
-    color: white;
-    margin-bottom: 28px;
-}
-
-.section-heading.center {
-    text-align: center;
-}
-
-.section-heading em {
-    font-style: italic;
-    color: #2ed3c6;
-}
+.about-text { color: white; }
 
 .about-body {
     font-size: 15px;
@@ -190,10 +237,12 @@
 .outline-btn:hover {
     border-color: #2ed3c6;
     color: #2ed3c6;
-    background: rgba(46, 211, 198, 0.05);
+    background: rgba(46,211,198,0.05);
 }
 
-/* ---- STATS STRIP ---- */
+/* ============================================
+   STATS STRIP
+   ============================================ */
 .stats-strip {
     background: #111;
     border-top: 1px solid #1e1e1e;
@@ -202,11 +251,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0;
+    font-family: 'Montserrat', sans-serif;
+    flex-wrap: wrap; /* FIX: stacks on mobile */
+    gap: 40px;
 }
 
 .stat {
     flex: 1;
+    min-width: 140px;
     max-width: 220px;
     display: flex;
     flex-direction: column;
@@ -227,6 +279,8 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     color: rgba(255,255,255,0.45);
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
 }
 
 .stat-divider {
@@ -237,10 +291,13 @@
     margin: 0 20px;
 }
 
-/* ---- WORK SECTION ---- */
+/* ============================================
+   WORK SECTION
+   ============================================ */
 .work-section {
     background: #0a0a0a;
     padding: 120px 80px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .work-container {
@@ -260,7 +317,7 @@
     border: 1px solid #1e1e1e;
     border-radius: 4px;
     padding: 36px 32px;
-    transition: 0.3s;
+    transition: transform 0.3s, border-color 0.3s;
     position: relative;
     overflow: hidden;
 }
@@ -278,10 +335,7 @@
     transition: transform 0.4s ease;
 }
 
-.work-card:hover::before {
-    transform: scaleX(1);
-}
-
+.work-card:hover::before { transform: scaleX(1); }
 .work-card:hover {
     border-color: #2a2a2a;
     transform: translateY(-4px);
@@ -293,7 +347,6 @@
     text-transform: uppercase;
     color: #2ed3c6;
     margin-bottom: 16px;
-    font-family: 'Montserrat', sans-serif;
 }
 
 .work-card-title {
@@ -318,20 +371,20 @@
     letter-spacing: 1px;
     color: rgba(255,255,255,0.4);
     text-decoration: none;
-    transition: 0.3s;
-    font-family: 'Montserrat', sans-serif;
+    transition: color 0.3s;
 }
 
-.work-card-link:hover {
-    color: #2ed3c6;
-}
+.work-card-link:hover { color: #2ed3c6; }
 
-/* ---- TESTIMONIAL ---- */
+/* ============================================
+   TESTIMONIAL
+   ============================================ */
 .testimonial-section {
     background: #0d0d0d;
     border-top: 1px solid #1a1a1a;
     border-bottom: 1px solid #1a1a1a;
     padding: 100px 80px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .testimonial-inner {
@@ -367,11 +420,14 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-/* ---- CTA SECTION ---- */
+/* ============================================
+   CTA SECTION
+   ============================================ */
 .cta-section {
     background: #090909;
     padding: 140px 80px;
     text-align: center;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .cta-inner {
@@ -380,6 +436,7 @@
 }
 
 .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
     font-size: 54px;
     font-weight: 600;
     color: white;
@@ -395,12 +452,31 @@
     font-weight: 300;
 }
 
-.cta-btn {
-    text-decoration: none;
+.main-btn {
     display: inline-block;
+    padding: 14px 36px;
+    background: transparent;
+    border: 1px solid #2ed3c6;
+    color: #2ed3c6;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.3s, color 0.3s;
 }
 
-/* ---- FOOTER ---- */
+.main-btn:hover {
+    background: #2ed3c6;
+    color: #0a0a0a;
+}
+
+.cta-btn { text-decoration: none; }
+
+/* ============================================
+   FOOTER
+   ============================================ */
 .footer {
     background: #050505;
     border-top: 1px solid #1a1a1a;
@@ -409,6 +485,7 @@
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .footer-name {
@@ -421,6 +498,8 @@
 .footer-links {
     display: flex;
     gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .footer-links a {
@@ -429,15 +508,85 @@
     text-transform: uppercase;
     color: rgba(255,255,255,0.3);
     text-decoration: none;
-    transition: 0.3s;
+    transition: color 0.3s;
 }
 
-.footer-links a:hover {
-    color: #2ed3c6;
-}
+.footer-links a:hover { color: #2ed3c6; }
 
 .footer-copy {
     font-size: 11px;
     color: rgba(255,255,255,0.2);
     letter-spacing: 1px;
+}
+
+/* ============================================
+   FIX 2: MOBILE RESPONSIVENESS
+   ============================================ */
+@media (max-width: 900px) {
+    .about-section,
+    .work-section,
+    .testimonial-section,
+    .cta-section,
+    .stats-strip,
+    .footer {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+
+    .about-container {
+        flex-direction: column;
+        gap: 48px;
+    }
+
+    .about-photo,
+    .about-image-border {
+        width: 100%;
+        max-width: 320px;
+        height: 300px;
+    }
+
+    .section-heading { font-size: 34px; }
+    .cta-heading      { font-size: 38px; }
+
+    .work-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .stat-divider { display: none; }
+}
+
+@media (max-width: 600px) {
+    .about-section,
+    .work-section,
+    .testimonial-section,
+    .cta-section,
+    .footer {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 72px;
+        padding-bottom: 72px;
+    }
+
+    .stats-strip {
+        padding: 40px 20px;
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .section-heading  { font-size: 28px; }
+    .cta-heading      { font-size: 32px; }
+    .testimonial-text { font-size: 20px; }
+
+    .work-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tagline-inner {
+        gap: 12px;
+        font-size: 10px;
+    }
+
+    .dot { display: none; } /* dots get crowded at very small widths */
+
+    .footer { padding: 40px 20px; }
 }
